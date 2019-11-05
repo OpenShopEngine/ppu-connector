@@ -13,7 +13,12 @@ module PpuConnector
       if @checkout.save
 
         payout = 0
-        @checkout.products.each { |product_id| payout += Product.find(product_id).price}
+        @checkout.products.each do |product_id|
+          product = Product.find(product_id)
+          payout += product.price
+          product.available = product.available - 1
+          product.save
+        end
 
         @transaction = Ppu::Transaction.new(:original => 'Offline transaction', :ppu_checkout_id => @checkout.id, :payout => payout)
 
