@@ -12,8 +12,6 @@ module PpuConnector
 
       if @checkout.save
 
-        p @products
-
         payout = 0
         @checkout.products.each { |product_id| payout += Product.find(product_id).price}
 
