@@ -6,7 +6,7 @@ module PpuConnector
     before_action :set_ps
 
     def create
-      @checkout = Ppu::Checkout.new(params.permit(:fullname, :email, :phone, :address, :user_id, :products => []))
+      @checkout = Ppu::Checkout.new(params.require(:checkout).permit(:fullname, :email, :phone, :address, :user_id, :products => []))
 
       @checkout.payment_system = @payment_system
 
